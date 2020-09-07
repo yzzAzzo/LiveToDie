@@ -1,0 +1,2 @@
+# LiveToDie
+Szakdolgozat 
