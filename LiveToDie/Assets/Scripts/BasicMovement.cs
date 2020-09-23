@@ -22,5 +22,5 @@ public class BasicMovement : MonoBehaviour
         transform.position = transform.position + (horizontal * Time.deltaTime); 
     }
 
-
 }
+    
