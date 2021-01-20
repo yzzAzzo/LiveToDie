@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
-
-
+    int[,] map;
+    
     [Range(0, 100)]
     public int initialChance;
 
@@ -16,7 +17,7 @@ public class MapGenerator : MonoBehaviour
     [Range(1, 8)]
     public int deathLimit;
 
-    [Range(1, 10)]
+    [Range(1, 20)]
     public int numR;
     private int count = 0;
 
@@ -68,7 +69,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (oldMap[x,y] == 0)
                 {
-                    if (neighbour < birthLimit) newMap[x, y] = 1;
+                    if (neighbour > birthLimit) newMap[x, y] = 1;
                     else
                     {
                         newMap[x, y] = 0;
@@ -88,7 +89,7 @@ public class MapGenerator : MonoBehaviour
         height = tileMapSize.y;
 
         if(terrainMap == null)
-        {
+        { 
             terrainMap = new int[width, height];
             InitPos();
         }
@@ -124,6 +125,29 @@ public class MapGenerator : MonoBehaviour
             ClearMap(true);
         }
         
+        if(Input.GetMouseButtonDown(115))
+        {
+            SaveAssetMap();
+            count++;
+        }
+    }
+
+    public void SaveAssetMap()
+    {
+        string saveName = "tmapXY_" + count;
+        var mf = GameObject.Find("Grid");
+
+        if (mf)
+        {
+            var savePath = "Assets/" + saveName + ".prefab";
+            if (PrefabUtility.CreatePrefab(savePath, mf))
+            {
+                EditorUtility.DisplayDialog("TilemapSaved", "Your Tilemap was saved under" + savePath, "Continue");
+            }else
+            {
+                EditorUtility.DisplayDialog("Tilemap NOT Saved", "An ERROR occured Your Tilemap was NOT saved under" + savePath, "Continue");
+            }
+        }
     }
 
     public void InitPos()
