@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
+
     int[,] map;
     
     [Range(0, 100)]
@@ -19,15 +20,17 @@ public class MapGenerator : MonoBehaviour
 
     [Range(1, 20)]
     public int numR;
-    private int count = 0;
+    private int _count = 0;
 
-    private int[,] terrainMap;
+    private int[,] _terrainMap;
     public Vector3Int tileMapSize;
 
     public Tilemap groundMap;   //top
     public Tilemap waterMap;    //bottom
     public Tile groundTile;
     public Tile waterTile;
+
+    private LoadingProgressBar _loadingProgressionBar;
 
     int width;
     int height;
@@ -82,28 +85,34 @@ public class MapGenerator : MonoBehaviour
         return newMap;
     }
 
+    ///<summary>
+    ///<para>Method for Simulation. It takes the number of Reps as an argument</para>
+    ///<para></para>
+    ///</summary>
     public void DoSimulation(int numR)
     {
         ClearMap(false);
         width = tileMapSize.x;
         height = tileMapSize.y;
 
-        if(terrainMap == null)
+        if(_terrainMap == null)
         { 
-            terrainMap = new int[width, height];
+            _terrainMap = new int[width, height];
             InitPos();
         }
 
         for(int i = 0; i < numR; i++)
         {
-            terrainMap = GenTilePosition(terrainMap);
+            _terrainMap = GenTilePosition(_terrainMap);
+            var progression = (float)i / numR;
+            _loadingProgressionBar.SliderProgression(progression);
         }
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (terrainMap[x,y] == 1)
+                if (_terrainMap[x,y] == 1)
                 {
                     groundMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), groundTile);
                     waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterTile);
@@ -112,29 +121,32 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _loadingProgressionBar = LoadingProgressBar.GetInstance();
+
+        DoSimulation(numR);
+    }
+
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            DoSimulation(numR);
-        }
-
+    { 
+   
         if (Input.GetMouseButtonDown(1))
         {
             ClearMap(true);
         }
         
-        if(Input.GetMouseButtonDown(115))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             SaveAssetMap();
-            count++;
+            _count++;
         }
     }
 
     public void SaveAssetMap()
     {
-        string saveName = "tmapXY_" + count;
+        string saveName = "tmapXY_" + _count;
         var mf = GameObject.Find("Grid");
 
         if (mf)
@@ -158,7 +170,7 @@ public class MapGenerator : MonoBehaviour
             for(int y = 0; y < height; y++)
             {
 
-                terrainMap[x, y] = Random.Range(0, 101) < initialChance ? 1 : 0;
+                _terrainMap[x, y] = Random.Range(0, 101) < initialChance ? 1 : 0;
                 
             }
 
@@ -172,7 +184,7 @@ public class MapGenerator : MonoBehaviour
 
         if (complete)
         {
-            terrainMap = null;
+            _terrainMap = null;
         }
     }
 }
