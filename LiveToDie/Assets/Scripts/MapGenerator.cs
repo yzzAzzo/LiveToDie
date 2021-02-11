@@ -8,7 +8,7 @@ public class MapGenerator : MonoBehaviour
 {
 
     int[,] map;
-    
+
     [Range(0, 100)]
     public int initialChance;
 
@@ -27,7 +27,7 @@ public class MapGenerator : MonoBehaviour
 
     public Tilemap groundMap;   //top
     public Tilemap waterMap;    //bottom
-    public Tile groundTile;
+    public RuleTile groundTile;
     public Tile waterTile;
 
     private LoadingProgressBar _loadingProgressionBar;
@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
     int width;
     int height;
 
-    public int [,] GenTilePosition(int[,] oldMap)
+    public int[,] GenTilePosition(int[,] oldMap)
     {
         int[,] newMap = new int[width, height];
         int neighbour;
@@ -49,8 +49,10 @@ public class MapGenerator : MonoBehaviour
                 neighbour = 0;
                 foreach (var bound in bounds.allPositionsWithin)
                 {
+                    //Jelenlegi pozicio megtalalva
                     if (bound.x == 0 && bound.y == 0) continue;
-                    if(x + bound.x >= 0 && x + bound.x < width && y + bound.y >= 0 && y + bound.y < height)
+                    //Ellenorizni hogy nem e megyunk ki a Map-rol
+                    if (x + bound.x >= 0 && x + bound.x < width && y + bound.y >= 0 && y + bound.y < height)
                     {
                         neighbour += oldMap[x + bound.x, y + bound.y];
                     }
@@ -61,7 +63,7 @@ public class MapGenerator : MonoBehaviour
 
                 }
 
-                if (oldMap[x,y] == 1)
+                if (oldMap[x, y] == 1)
                 {
                     if (neighbour < deathLimit) newMap[x, y] = 0;
                     else
@@ -70,7 +72,7 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
 
-                if (oldMap[x,y] == 0)
+                if (oldMap[x, y] == 0)
                 {
                     if (neighbour > birthLimit) newMap[x, y] = 1;
                     else
@@ -95,35 +97,49 @@ public class MapGenerator : MonoBehaviour
         width = tileMapSize.x;
         height = tileMapSize.y;
 
-        if(_terrainMap == null)
-        { 
+        if (_terrainMap == null)
+        {
             _terrainMap = new int[width, height];
             InitPos();
         }
 
-        for(int i = 0; i < numR; i++)
+        for (int i = 0; i < numR; i++)
         {
             _terrainMap = GenTilePosition(_terrainMap);
             var progression = (float)i / numR;
-            _loadingProgressionBar.SliderProgression(progression);
+            //_loadingProgressionBar.SliderProgression(progression);
         }
+
+        //_terrainMap = CleanUpMess(_terrainMap);
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if (_terrainMap[x,y] == 1)
+                if (_terrainMap[x, y] == 1)
                 {
                     groundMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), groundTile);
                     waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterTile);
                 }
+                else
+                {
+                    //TODO too much effor?
+                    waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterTile);
+                }
+
             }
         }
     }
 
+    //private int[,] CleanUpMess(int[,] terrainMap)
+    //{
+    //    var miagecimvanhe = terrainMap;
+    //    return terrainMap;
+    //}
+
     private void Start()
     {
-        _loadingProgressionBar = LoadingProgressBar.GetInstance();
+        //_loadingProgressionBar = LoadingProgressBar.GetInstance();
 
         DoSimulation(numR);
     }
