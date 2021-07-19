@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     
     public void NewGame()
     {
-        Loader.Load(Loader.Scene.Game);
+        GameManager.instance.LoadGame();
     }
     public void Quit()
     {

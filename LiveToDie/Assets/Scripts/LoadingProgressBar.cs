@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public  class LoadingProgressBar : MonoBehaviour
 {
     public  Slider slider;
@@ -14,18 +15,10 @@ public  class LoadingProgressBar : MonoBehaviour
     }
     public void Awake()
     {
-        if (instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+       
     }
 
-    public  void SliderProgression(float progression)
+    public void SliderProgression(float progression)
     {
         slider.value = progression;
     }

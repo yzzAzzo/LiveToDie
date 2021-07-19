@@ -25,12 +25,15 @@ public class MapGenerator : MonoBehaviour
     private int[,] _terrainMap;
     public Vector3Int tileMapSize;
 
+    public float Progression;
+    public bool IsDone;
+
     public Tilemap groundMap;   //top
     public Tilemap waterMap;    //bottom
     public RuleTile groundTile;
     public Tile waterTile;
 
-    private LoadingProgressBar _loadingProgressionBar;
+    public static MapGenerator instance;
 
     int width;
     int height;
@@ -106,11 +109,8 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < numR; i++)
         {
             _terrainMap = GenTilePosition(_terrainMap);
-            var progression = (float)i / numR;
-            //_loadingProgressionBar.SliderProgression(progression);
+            Progression = ((float)i+1) / numR;
         }
-
-        //_terrainMap = CleanUpMess(_terrainMap);
 
         for (int x = 0; x < width; x++)
         {
@@ -131,17 +131,15 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    //private int[,] CleanUpMess(int[,] terrainMap)
-    //{
-    //    var miagecimvanhe = terrainMap;
-    //    return terrainMap;
-    //}
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
-        //_loadingProgressionBar = LoadingProgressBar.GetInstance();
-
         DoSimulation(numR);
+        IsDone = true;
     }
 
     // Update is called once per frame
@@ -182,12 +180,9 @@ public class MapGenerator : MonoBehaviour
     {
         for (int x = 0; x < width; x++)
         {
-
             for(int y = 0; y < height; y++)
             {
-
                 _terrainMap[x, y] = Random.Range(0, 101) < initialChance ? 1 : 0;
-                
             }
 
         }
