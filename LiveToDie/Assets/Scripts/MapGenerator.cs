@@ -91,7 +91,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     ///<summary>
-    ///<para>Method for Simulation. It takes the number of Reps as an argument</para>
+    ///<para>Szimulacio. Ismetlesek szama a param</para>
     ///<para></para>
     ///</summary>
     public void DoSimulation(int numR)
@@ -119,7 +119,6 @@ public class MapGenerator : MonoBehaviour
                 if (_terrainMap[x, y] == 1)
                 {
                     groundMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), groundTile);
-                    waterMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), waterTile);
                 }
                 else
                 {
@@ -138,7 +137,15 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
-        DoSimulation(numR);
+
+        if (NavigationStatics.isNewGame)
+        {
+            DoSimulation(numR);
+        }
+        else
+        {
+            //LoadMap();
+        }
         IsDone = true;
     }
 
@@ -151,7 +158,7 @@ public class MapGenerator : MonoBehaviour
             ClearMap(true);
         }
         
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Alpha7))
         {
             SaveAssetMap();
             _count++;
@@ -160,12 +167,12 @@ public class MapGenerator : MonoBehaviour
 
     public void SaveAssetMap()
     {
-        string saveName = "tmapXY_" + _count;
+        string saveName = "TileMap_" + _count;
         var mf = GameObject.Find("Grid");
 
         if (mf)
         {
-            var savePath = "Assets/" + saveName + ".prefab";
+            var savePath = "Assets/SavedMaps/" + saveName + ".prefab";
             if (PrefabUtility.CreatePrefab(savePath, mf))
             {
                 EditorUtility.DisplayDialog("TilemapSaved", "Your Tilemap was saved under" + savePath, "Continue");
@@ -183,6 +190,18 @@ public class MapGenerator : MonoBehaviour
             for(int y = 0; y < height; y++)
             {
                 _terrainMap[x, y] = Random.Range(0, 101) < initialChance ? 1 : 0;
+
+
+                //this part is to make the character spawn on land
+                //width check for spawn are generation
+                if(x > ((width/2)-5) && x < ((width/2) + 5))
+                {
+                    //height check for spawn are generation
+                    if (y > ((height / 2) - 5) && y < ((height / 2) + 5))
+                    {
+                        _terrainMap[x, y] = 1;
+                    }
+                }
             }
 
         }

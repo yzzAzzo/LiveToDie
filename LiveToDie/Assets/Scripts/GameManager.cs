@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Slider LoadingSlider;
 
     private float _totalLoadingProgress;
+
     private float _totalMapProgress;
 
     private void Awake()
@@ -22,14 +24,25 @@ public class GameManager : MonoBehaviour
 
     List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
 
-    public void LoadGame()
+    internal void NewGame()
+    {
+        NavigationStatics.isNewGame = true;
+        LoadGameScene();
+    }
+
+    internal void LoadGame()
+    {
+        NavigationStatics.isNewGame = false;
+        LoadGameScene();
+    }
+
+    private void LoadGameScene()
     {
         LoadingScreen.gameObject.SetActive(true);
-       
-        scenesToLoad.Add(SceneManager.UnloadSceneAsync(1));
-        scenesToLoad.Add(SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive));
+
+        scenesToLoad.Add(SceneManager.UnloadSceneAsync((int)Scenes.MainMenu));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync((int)Scenes.Game, LoadSceneMode.Additive));
         //try to delete this bro
-        StartCoroutine(GetSceneLoadProgress());
         StartCoroutine(GetTotalProgress());
     }
 

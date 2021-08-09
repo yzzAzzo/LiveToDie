@@ -25,5 +25,10 @@ public class BasicMovement : MonoBehaviour
         transform.position = transform.position + (movement * Time.deltaTime); 
     }
 
+    private void OnCollisionEnter()
+    {
+        Debug.Log("Hit deteceted");
+    }
+
 }
     
