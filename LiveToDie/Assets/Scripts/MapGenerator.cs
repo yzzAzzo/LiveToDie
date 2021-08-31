@@ -43,28 +43,12 @@ public class MapGenerator : MonoBehaviour
         int[,] newMap = new int[width, height];
         int neighbour;
 
-        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                neighbour = 0;
-                foreach (var bound in bounds.allPositionsWithin)
-                {
-                    //Jelenlegi pozicio megtalalva
-                    if (bound.x == 0 && bound.y == 0) continue;
-                    //Ellenorizni hogy nem e megyunk ki a Map-rol
-                    if (x + bound.x >= 0 && x + bound.x < width && y + bound.y >= 0 && y + bound.y < height)
-                    {
-                        neighbour += oldMap[x + bound.x, y + bound.y];
-                    }
-                    else
-                    {
-                        neighbour++;
-                    }
-
-                }
+                neighbour = CountNeighbours(oldMap, x, y);
 
                 if (oldMap[x, y] == 1)
                 {
@@ -112,6 +96,8 @@ public class MapGenerator : MonoBehaviour
             Progression = ((float)i+1) / numR;
         }
 
+        CleanTerrainMap(_terrainMap);
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -128,6 +114,52 @@ public class MapGenerator : MonoBehaviour
 
             }
         }
+
+        EnemySpawnHandler.instance.SpawnEnemies(_terrainMap, height, width);
+    }
+
+    private void CleanTerrainMap(int[,] terrainMap)
+    {
+        int neighbour = 0;
+        //cleaning tile map from bugged tiles
+        // TODO make it batter
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                neighbour = CountNeighbours(terrainMap, x, y);
+                if (neighbour <= 3)
+                {
+                    terrainMap[x, y] = 0;
+                }
+            }
+        }
+    }
+
+    private int CountNeighbours(int[,] oldMap, int x, int y)
+    {
+        int neighbour = 0;
+        BoundsInt bounds = new BoundsInt(-1, -1, 0, 3, 3, 1);
+
+        foreach (var bound in bounds.allPositionsWithin)
+        {
+            //Found current position
+            if (bound.x == 0 && bound.y == 0) continue;
+            //Check if we still in the map
+            if (x + bound.x >= 0 && x + bound.x < width && y + bound.y >= 0 && y + bound.y < height)
+            {
+                neighbour += oldMap[x + bound.x, y + bound.y];
+            }
+            else
+            {
+                neighbour++;
+            }
+        
+          
+        
+        }
+        return neighbour;
+        
     }
 
     private void Awake()
@@ -144,9 +176,26 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            //LoadMap();
+            LoadMap();
         }
+
+        NavigationStatics.binaryMap = map;
+
         IsDone = true;
+    }
+
+    private void LoadMap()
+    {
+        try
+        {
+            var asset = AssetDatabase.LoadAssetAtPath(GameConstants.SavedGamesPath + NavigationStatics.mapInUse + ".prefab", typeof(Object));
+            var currentPrefab = Instantiate(asset, Vector3.zero, Quaternion.identity);
+        }
+        catch (System.Exception)
+        {
+
+            throw new System.Exception("Failed to load saved Map");
+        }
     }
 
     // Update is called once per frame

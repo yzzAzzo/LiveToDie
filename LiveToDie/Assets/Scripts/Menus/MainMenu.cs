@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -15,16 +16,20 @@ public class MainMenu : MonoBehaviour
 
 	public void NewGame()
 	{
+		
 		GameManager.instance.NewGame();
 	}
 
-	public void LoadGame()
+	public void LoadGame(int buttonNumber)
 	{
+		NavigationStatics.mapInUse = Texts[buttonNumber].GetComponent<TextMeshProUGUI>().text;
 		GameManager.instance.LoadGame();
 	}
+
 	//TODO later on upgrade it(now only loads MAPS!)
 	public void ListLoadableGames()
-	{ 
+	{
+		InitButtons();
 
 		List<Button> _loadableGameButtons = new List<Button>();
 		List<FileInfo> filteredInfos = new List<FileInfo>();
@@ -57,6 +62,24 @@ public class MainMenu : MonoBehaviour
 				Buttons[i].GetComponent<Image>().color = new Color32(169, 169, 169, 100);
 			}
 		}
+	}
+
+	private void InitButtons()
+    {
+		//Subscribe every button to the handler
+		//Note to self. We give a delegate to the AddListener to pass a single param that we use to Load the correct map
+
+		//  for (int i = 0; i < Buttons.Count; i++)
+		//  {
+		//		Buttons[i].onClick.AddListener(() => LoadGame(i));
+		//	}
+
+		//Hogy oszinte legyek fogalmam sincs miert nem mukodik a fenti kód. Olyan mintha referenciat adna át az "i" vel és ezért minen 
+		//Esemeny 4 et ad parameterul tovabb pedig az bele se fut viszon az i atallitodik ra tehat ez megerositi a referencia teoriat(DE PEDIG AZ int).
+		Buttons[0].onClick.AddListener(() => LoadGame(0));
+		Buttons[1].onClick.AddListener(() => LoadGame(1));
+		Buttons[2].onClick.AddListener(() => LoadGame(2));
+		Buttons[3].onClick.AddListener(() => LoadGame(3));
 	}
 	public void Quit()
 	{
