@@ -2051,6 +2051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTileMap: {fileID: 285962660}
   blueSlime: {fileID: 1778070707}
+  spawnCap: 50
 --- !u!1 &1616105588
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,7 +2152,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628414799}
   m_Enabled: 1
-  m_CellSize: {x: 0.16, y: 0.16, z: 0.16}
+  m_CellSize: {x: 0.32, y: 0.32, z: 0.16}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -2207,7 +2208,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.9000244, y: -7.399994}
+  m_AnchoredPosition: {x: -4.900055, y: -7.400009}
   m_SizeDelta: {x: -192.72565, y: -210.8452}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635900534
