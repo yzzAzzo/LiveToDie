@@ -2016,7 +2016,7 @@ MonoBehaviour:
   birthLimit: 3
   deathLimit: 2
   numR: 20
-  tileMapSize: {x: 250, y: 250, z: 0}
+  tileMapSize: {x: 100, y: 100, z: 0}
   Progression: 0
   IsDone: 0
   groundMap: {fileID: 285962660}
@@ -2208,7 +2208,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.900055, y: -7.400009}
+  m_AnchoredPosition: {x: -4.9000244, y: -7.4000244}
   m_SizeDelta: {x: -192.72565, y: -210.8452}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635900534
@@ -2259,6 +2259,10 @@ PrefabInstance:
     - target: {fileID: 8191387078206107193, guid: e2e82b927f232cd4f8a7cce55b77a98b, type: 3}
       propertyPath: m_Name
       value: BlueSlime
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191387078206107193, guid: e2e82b927f232cd4f8a7cce55b77a98b, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8191387078206107198, guid: e2e82b927f232cd4f8a7cce55b77a98b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2495,6 +2499,7 @@ GameObject:
   - component: {fileID: 1896551014}
   - component: {fileID: 1896551016}
   - component: {fileID: 1896551015}
+  - component: {fileID: 1896551017}
   m_Layer: 0
   m_Name: Kain
   m_TagString: Untagged
@@ -2651,6 +2656,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1896551017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896551010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bc623fe749fc64e8d9ae2fb2c19744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  attackRange: 0.21
+  damage: 20
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &2001931891
 GameObject:
   m_ObjectHideFlags: 0

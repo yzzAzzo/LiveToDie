@@ -27,8 +27,16 @@ public class BasicMovement : MonoBehaviour
         animator.SetFloat("Vertical",movement.y);
         animator.SetFloat("Magnitude",movement.magnitude);
 
+        var horizontalAxis = Input.GetAxisRaw("Horizontal");
+        var verticalAxis = Input.GetAxisRaw("Vertical");
+
         transform.position = transform.position + (movement * Time.deltaTime);
 
+        if (horizontalAxis == 1 || horizontalAxis == -1 || verticalAxis == 1 || verticalAxis == -1)
+        {
+            animator.SetFloat("LastMoveX", horizontalAxis);
+            animator.SetFloat("LastMoveY", verticalAxis);
+        }
     }
 
     private void OnCollisionEnter()

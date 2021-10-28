@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8191387078206107587}
   - component: {fileID: 8191387078206107196}
   - component: {fileID: 8191387078206107197}
-  m_Layer: 0
+  - component: {fileID: 5283764314629525979}
+  m_Layer: 8
   m_Name: BlueSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,3 +167,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Min: 0.1
   Max: 0.2
+--- !u!114 &5283764314629525979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191387078206107193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d2cd5f61f7e6845bfc0a7e44191168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
