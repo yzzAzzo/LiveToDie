@@ -2668,7 +2668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07bc623fe749fc64e8d9ae2fb2c19744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1896551014}
   attackRange: 0.21
   damage: 20
   enemyLayers:
