@@ -7,8 +7,6 @@ using UnityEngine.Tilemaps;
 public class MapGenerator : MonoBehaviour
 {
 
-    int[,] map;
-
     [Range(0, 100)]
     public int initialChance;
 
@@ -75,7 +73,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     ///<summary>
-    ///<para>Szimulacio. Ismetlesek szama a param</para>
+    ///<para>Number of Repetitions</para>
     ///<para></para>
     ///</summary>
     public void DoSimulation(int numR)
@@ -179,8 +177,6 @@ public class MapGenerator : MonoBehaviour
             LoadMap();
         }
 
-        NavigationStatics.binaryMap = map;
-
         IsDone = true;
     }
 
@@ -188,12 +184,12 @@ public class MapGenerator : MonoBehaviour
     {
         try
         {
-            var asset = AssetDatabase.LoadAssetAtPath(GameConstants.SavedGamesPath + NavigationStatics.mapInUse + ".prefab", typeof(Object));
+            var asset = SaveSystem.LoadMap();
             var currentPrefab = Instantiate(asset, Vector3.zero, Quaternion.identity);
         }
         catch (System.Exception)
         {
-
+            DoSimulation(numR);
             throw new System.Exception("Failed to load saved Map");
         }
     }
@@ -216,20 +212,7 @@ public class MapGenerator : MonoBehaviour
 
     public void SaveAssetMap()
     {
-        string saveName = "TileMap_" + _count;
-        var mf = GameObject.Find("Grid");
-
-        if (mf)
-        {
-            var savePath = "Assets/SavedMaps/" + saveName + ".prefab";
-            if (PrefabUtility.CreatePrefab(savePath, mf))
-            {
-                EditorUtility.DisplayDialog("TilemapSaved", "Your Tilemap was saved under" + savePath, "Continue");
-            }else
-            {
-                EditorUtility.DisplayDialog("Tilemap NOT Saved", "An ERROR occured Your Tilemap was NOT saved under" + savePath, "Continue");
-            }
-        }
+        SaveSystem.SaveMap("TileMap_" + _count);
     }
 
     public void InitPos()

@@ -1,0 +1,5 @@
+License: CC0
+
+OpenGameArt:
+https://opengameart.org/content/rpg-game-ui
+https://opengameart.org/content/fantasy-coin-set

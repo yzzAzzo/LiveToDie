@@ -15,7 +15,7 @@ public  class LoadingProgressBar : MonoBehaviour
     }
     public void Awake()
     {
-       
+        instance = this;
     }
 
     public void SliderProgression(float progression)
