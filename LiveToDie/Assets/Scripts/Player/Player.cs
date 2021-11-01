@@ -16,6 +16,12 @@ public class Player : EntityBase
     private void Awake()
     {
         instance = this;
+        LoadPlayer(); 
+    }
+
+    private void Start()
+    {
+        InvokeRepeating("SavePlayer", 10.0f, 10.0f);
     }
 
     void Update()
@@ -42,8 +48,19 @@ public class Player : EntityBase
             XpNeeded *= 2;
         }
 
-        Debug.Log("Xp we have: " + Xp + "___ Xp we need:" + XpNeeded);
+        //Debug.Log("Xp we have: " + Xp + "___ Xp we need:" + XpNeeded);
 
+    }
+
+    private void SavePlayer()
+    {
+        Debug.Log("--------------Player Data Saved----------------");
+        SaveSystem.SavePlayer(this);
+    }
+
+    private void LoadPlayer()
+    {
+        SaveSystem.LoadPlayer();
     }
 
 

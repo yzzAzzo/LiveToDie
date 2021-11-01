@@ -4417,6 +4417,7 @@ MonoBehaviour:
     m_Bits: 256
   offset: {x: 0, y: 0.1, z: 0}
   attackTime: 0
+  xpWorth: 10
 --- !u!1 &1778563277
 GameObject:
   m_ObjectHideFlags: 0
@@ -4946,6 +4947,8 @@ MonoBehaviour:
   attackTime: 0
   lvl: 1
   mana: 20
+  Xp: 0
+  XpNeeded: 100
 --- !u!1 &1918958447
 GameObject:
   m_ObjectHideFlags: 0

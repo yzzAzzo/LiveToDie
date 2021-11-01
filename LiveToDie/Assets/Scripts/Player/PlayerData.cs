@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerData : MonoBehaviour
+public class PlayerData
 {
     public int health;
     public int mana;
     public int lvl;
+    public int xp;
+    public int xpNeeded;
     public float[] position;
 
     public PlayerData(Player player)
@@ -15,6 +17,8 @@ public class PlayerData : MonoBehaviour
         lvl = player.lvl;
         health = player.health;
         mana = player.mana;
+        xp = player.Xp;
+        xpNeeded = player.XpNeeded;
         position = new float[3];
 
         position[0] = player.transform.position.x;
