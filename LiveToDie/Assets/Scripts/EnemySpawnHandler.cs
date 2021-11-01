@@ -9,6 +9,7 @@ public class EnemySpawnHandler : MonoBehaviour
     public Tilemap groundTileMap;
     public GameObject blueSlime;
     public int spawnCap;
+    private Vector3 center = new Vector3(1,1,1);
     // Start is called before the first frame update
     private void Awake()
     {
@@ -16,11 +17,23 @@ public class EnemySpawnHandler : MonoBehaviour
      
     }
 
+    private void Update()
+    {
+        //FOR DEbug
+        //var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //Debug.Log(Vector3.Distance(mousePosition, center));
+    }
+
     public void SpawnEnemies(int[,] map, int height, int width)
     {
         int count = 0;
         Vector3Int coordinate = new Vector3Int(0, 0, 0);
-        Vector3Int tilemapCenter = new Vector3Int(groundTileMap.size.x/2, groundTileMap.size.y/2, 0);
+
+        Vector3 center = groundTileMap.transform.position;
+
+        Player.instance.transform.position = center;
+
         //TODO delete unused params
         for (int x = 0; x < groundTileMap.size.x && spawnCap > count; x++)
         {
@@ -28,13 +41,16 @@ public class EnemySpawnHandler : MonoBehaviour
             {
                 coordinate.x = x;
                 coordinate.y = y;
+                var coordCellToWorld = groundTileMap.CellToWorld(coordinate);
+                Debug.Log(coordCellToWorld);
+                var lookatme = Vector3.Distance(coordCellToWorld, center);
 
-                if (groundTileMap.HasTile(coordinate) && Vector3.Distance(coordinate, tilemapCenter) > 50 && Vector3.Distance(coordinate, tilemapCenter) < 100)
+                if (groundTileMap.HasTile(coordinate) && Vector3.Distance(coordCellToWorld, center) >  2 && Vector3.Distance(coordCellToWorld, center) < 30 && map[x,y] == 1)
                 {
-                    if (Random.Range(0,100) > 80)
+                    if (Random.Range(0,100) > 98)
                     {
-                        var worldPosition = groundTileMap.CellToWorld(coordinate);
-                        Instantiate(blueSlime, worldPosition, Quaternion.identity);
+
+                        var instance = Instantiate(blueSlime, coordCellToWorld, Quaternion.identity);
                         count++;
                     }
                 }

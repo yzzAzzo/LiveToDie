@@ -6,6 +6,11 @@ public class BlueSlime : Enemy
 {
     public int xpWorth = 10;
 
+    private void Start()
+    {
+        InvokeRepeating("Attack", 1.0f, 1.0f);
+    }
+
     public override void TakeDamage(int damage)
     {
          currentHealth -= damage;
@@ -28,16 +33,32 @@ public class BlueSlime : Enemy
         Destroy(gameObject);
     }
 
+    public void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + offset, attackRange, enemyLayers);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Player>().TakeDamage(damage);
+        }
+
+
+    }
+
     private void DropExperience()
     {
         Player.instance.Xp += 10;
     }
-
 
     IEnumerator HurtForAWhile(float time)
     {
         yield return new WaitForSeconds(time);
 
         gameObject.GetComponent<SpriteRenderer>().material.color = new Color(255, 255, 255);
+    }
+
+    private void Update()
+    {
+       
     }
 }

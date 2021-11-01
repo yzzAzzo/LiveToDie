@@ -9,6 +9,7 @@ public class Player : EntityBase
     //Player attributes
     public int lvl = 1;
     public int mana = 20;
+    public int currentMana = 20;
     public int Xp = 0;
     public int XpNeeded = 0;
     public static Player instance;
@@ -63,6 +64,32 @@ public class Player : EntityBase
         SaveSystem.LoadPlayer();
     }
 
+    private void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position + offset, attackRange, enemyLayers);
+        isAttacking = true;
+        attackTime = 0.45f;
+
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(damage);
+        }
+
+        animator.SetBool("IsAttacking", isAttacking);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        //Play hurt anim
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
 
     void OnDrawGizmosSelected()

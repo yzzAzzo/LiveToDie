@@ -15,6 +15,8 @@ public static class SaveSystem
         PlayerPrefs.SetInt("lvl",player.lvl);
         PlayerPrefs.SetInt("Xp",player.Xp);
         PlayerPrefs.SetInt("XpNeeded",player.XpNeeded);
+        PlayerPrefs.SetInt("currentHealth", player.currentHealth);
+        PlayerPrefs.SetInt("currentMana", player.currentMana);
         PlayerPrefs.SetString("position", player.transform.position.ToString());
                             
         //BinaryFormatter formatter = new BinaryFormatter();
@@ -35,6 +37,8 @@ public static class SaveSystem
             Player.instance.mana = PlayerPrefs.GetInt("mana");
             Player.instance.lvl = PlayerPrefs.GetInt("lvl");
             Player.instance.Xp = PlayerPrefs.GetInt("Xp");
+            Player.instance.currentHealth = PlayerPrefs.GetInt("currentHealth");
+            Player.instance.currentMana = PlayerPrefs.GetInt("currentMana");
             Player.instance.XpNeeded = PlayerPrefs.GetInt("XpNeeded");
             var position = PlayerPrefs.GetString("position");
             Debug.Log(position);

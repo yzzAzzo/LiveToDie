@@ -5,12 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public int health;
-    public int mana;
-    public int lvl;
-    public int xp;
-    public int xpNeeded;
-    public float[] position;
+    public int      health;
+    public int      mana;
+    public int      lvl;
+    public int      xp;
+    public int      xpNeeded;
+    public float[]  position;
 
     public PlayerData(Player player)
     {

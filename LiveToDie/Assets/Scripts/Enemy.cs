@@ -12,4 +12,16 @@ public class Enemy : EntityBase
     {
         currentHealth = health;
     }
+
+    public virtual void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        //Play hurt anim
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 }
