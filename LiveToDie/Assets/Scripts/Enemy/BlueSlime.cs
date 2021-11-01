@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class BlueSlime : Enemy
 {
-   public override void TakeDamage(int damage)
-   {
-        currentHealth -= damage;
+    public int xpWorth = 10;
 
-        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(255, 73, 73);
+    public override void TakeDamage(int damage)
+    {
+         currentHealth -= damage;
 
-        StartCoroutine(HurtForAWhile(1f));
+         gameObject.GetComponent<SpriteRenderer>().material.color = new Color(255, 73, 73);
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-   }
+         StartCoroutine(HurtForAWhile(1f));
+
+         if (currentHealth <= 0)
+         {
+             Die();
+         }
+    }
+    
+    public override void Die()
+    {
+        Debug.Log("I just died in your arms tonight");
+
+        DropExperience();
+        Destroy(gameObject);
+    }
+
+    private void DropExperience()
+    {
+        Player.instance.Xp += 10;
+    }
+
 
     IEnumerator HurtForAWhile(float time)
     {

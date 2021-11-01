@@ -198,16 +198,16 @@ public class MapGenerator : MonoBehaviour
     void Update()
     { 
    
-        if (Input.GetMouseButtonDown(1))
-        {
-            ClearMap(true);
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    ClearMap(true);
+        //}
         
-        if(Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            SaveAssetMap();
-            _count++;
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    SaveAssetMap();
+        //    _count++;
+        //}
     }
 
     public void SaveAssetMap()

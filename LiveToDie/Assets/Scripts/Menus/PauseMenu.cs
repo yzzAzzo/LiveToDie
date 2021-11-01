@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool IsPaused = false;
     public GameObject PauseMenuUI;
+    public TMP_InputField inputField;
 
     // Update is called once per frame
     void Update()
@@ -25,14 +27,19 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void Pause()
+    public void SaveGame()
+    {
+        //NavigationStatics.mapInUse = inputField.text;
+        SaveSystem.SaveMap(inputField.text);
+    }
+    public void Pause()
     {
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         IsPaused = true;
     }
 
-    private void Resume()
+    public void Resume()
     {
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
@@ -41,7 +48,6 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        SceneManager.UnloadSceneAsync((int)Scenes.Game);
-        SceneManager.LoadScene((int)Scenes.GameManager);
+        GameManager.instance.LoadMenuScene();
     }
 }

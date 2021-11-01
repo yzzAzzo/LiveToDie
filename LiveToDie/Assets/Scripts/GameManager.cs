@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GetTotalProgress());
     }
 
+    public void LoadMenuScene()
+    {
+        scenesToLoad.Add(SceneManager.UnloadSceneAsync((int)Scenes.Game));
+        scenesToLoad.Add(SceneManager.LoadSceneAsync((int)Scenes.MainMenu, LoadSceneMode.Additive));
+    }
+
     public IEnumerator GetSceneLoadProgress()
     {
         for (int i = 0; i < scenesToLoad.Count; i++)

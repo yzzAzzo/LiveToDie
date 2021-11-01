@@ -23,11 +23,28 @@ public class MainMenu : MonoBehaviour
 	public void LoadGame(int buttonNumber)
 	{
 		NavigationStatics.mapInUse = Texts[buttonNumber].GetComponent<TextMeshProUGUI>().text;
+		DestroyOtherMaps(NavigationStatics.mapInUse);
+
 		GameManager.instance.LoadGame();
 	}
 
-	//TODO later on upgrade it(now only loads MAPS!)
-	public void ListLoadableGames()
+    private void DestroyOtherMaps(string mapInUse)
+    {
+
+		//This Avoids Multiple Maps Being Loaded At The Same Time
+		foreach(var text in Texts)
+        {
+			var mapName = text.GetComponent<TextMeshProUGUI>().text;
+
+			if (mapName != mapInUse)
+            {
+				Destroy(GameObject.Find(mapName + "(Clone)" ));
+			}
+        }
+    }
+
+    //TODO later on upgrade it(now only loads MAPS!)
+    public void ListLoadableGames()
 	{
 		InitButtons();
 
