@@ -13,11 +13,17 @@ public class Player : EntityBase
     public int Xp = 0;
     public int XpNeeded = 0;
     public static Player instance;
+    private Inventory inventory;
+
+    [SerializeField] private UI_Inventory uiInventory;
 
     private void Awake()
     {
         instance = this;
-        LoadPlayer(); 
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+
+        LoadPlayer();
     }
 
     private void Start()
