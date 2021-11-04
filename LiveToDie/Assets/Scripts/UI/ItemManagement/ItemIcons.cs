@@ -15,4 +15,6 @@ public class ItemIcons : MonoBehaviour
     {
         Instance = this;
     }
+
+    public Transform WorldItemPrefab;
 }

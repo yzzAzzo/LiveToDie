@@ -11,8 +11,6 @@ public class UI_Inventory : MonoBehaviour
 
     private void Awake()
     {
-        itemSlotContainer = transform.Find("ItemSlotContainer");
-        itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
     }
 
     public void SetInventory(Inventory inventory)
@@ -26,6 +24,9 @@ public class UI_Inventory : MonoBehaviour
         int x = 0;
         int y = 0;
         float itemSlotCellSize = 105f;
+
+        itemSlotContainer = transform.Find("ItemSlotContainer");
+        itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
 
         foreach (Item item in inventory.GetItems())
         {
