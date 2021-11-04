@@ -226,7 +226,7 @@ public class MapGenerator : MonoBehaviour
 
                 //this part is to make the character spawn on land
                 //width check for spawn are generation
-                if(x > ((width/2)-5) && x < ((width/2) + 5))
+                if(x > ((width/2)-10) && x < ((width/2) + 10))
                 {
                     //height check for spawn are generation
                     if (y > ((height / 2) - 5) && y < ((height / 2) + 5))

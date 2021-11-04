@@ -27,7 +27,8 @@ public class Player : EntityBase
 
         ItemWorld.SpawnItemWorld(new Vector3(1, 1), new Item { itemType = Item.ItemType.HealtPotion, amount = 1 });
         ItemWorld.SpawnItemWorld(new Vector3(-1, 1), new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(2, -1), new Item { itemType = Item.ItemType.Weapon, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(2, 1), new Item { itemType = Item.ItemType.Weapon, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(2, -1), new Item { itemType = Item.ItemType.Coin, amount = 1 });
     }
 
     private void Start()

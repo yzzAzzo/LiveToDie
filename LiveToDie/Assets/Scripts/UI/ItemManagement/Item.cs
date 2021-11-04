@@ -32,4 +32,21 @@ public class Item
         }
 
     }
+
+    public Color GetColor()
+    {
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                return new Color(0.8113208f, 0.746262f, 0.746262f);
+            case ItemType.Coin:
+                return new Color(1, 1, 0);
+            case ItemType.HealtPotion:
+                return new Color(1, 0, 0);
+            case ItemType.ManaPotion:
+                return new Color(0, 0, 1);
+            default:
+                return new Color(0, 0, 0);
+        }
+    }
 }

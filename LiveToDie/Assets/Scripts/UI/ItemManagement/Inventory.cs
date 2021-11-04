@@ -13,7 +13,7 @@ public class Inventory
         AddItem(new Item() { amount = 1, itemType = Item.ItemType.Weapon });
         AddItem(new Item() { amount = 1, itemType = Item.ItemType.HealtPotion });
         AddItem(new Item() { amount = 1, itemType = Item.ItemType.ManaPotion });
-        AddItem(new Item() { amount = 1, itemType = Item.ItemType.ManaPotion });
+        AddItem(new Item() { amount = 1, itemType = Item.ItemType.Coin });
 
         Debug.Log("Inventory");
     }
