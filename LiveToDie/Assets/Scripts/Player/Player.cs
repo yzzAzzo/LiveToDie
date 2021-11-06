@@ -20,15 +20,48 @@ public class Player : EntityBase
     private void Awake()
     {
         instance = this;
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
         uiInventory.SetInventory(inventory);
 
         LoadPlayer();
+    }
 
-        ItemWorld.SpawnItemWorld(new Vector3(1, 1), new Item { itemType = Item.ItemType.HealtPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(-1, 1), new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(2, 1), new Item { itemType = Item.ItemType.Weapon, amount = 1 });
-        ItemWorld.SpawnItemWorld(new Vector3(2, -1), new Item { itemType = Item.ItemType.Coin, amount = 1 });
+    private void UseItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.Weapon:
+                Equip();
+                break;
+            case Item.ItemType.Coin:
+                break;
+            case Item.ItemType.HealtPotion:
+                UseHealthPotion();
+                break;
+            case Item.ItemType.ManaPotion:
+                UseManaPotion();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void UseManaPotion()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void UseHealthPotion()
+    {
+        if (currentHealth <= 90)
+        {
+            currentHealth += 10; 
+        }
+    }
+
+    private void Equip()
+    {
+        throw new NotImplementedException();
     }
 
     private void Start()
@@ -100,6 +133,17 @@ public class Player : EntityBase
         {
             Die();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if (itemWorld != null)
+        {
+            inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
+        }
+
     }
 
 
