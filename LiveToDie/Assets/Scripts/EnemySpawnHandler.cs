@@ -7,14 +7,26 @@ public class EnemySpawnHandler : MonoBehaviour
 {
     public static EnemySpawnHandler instance;
     public Tilemap groundTileMap;
+    public Grid grid;
     public GameObject blueSlime;
-    public int spawnCap;
-    private Vector3 center = new Vector3(1,1,1);
-    // Start is called before the first frame update
+    public GameObject fourOpenPillar;
+    public GameObject doubleRock;
+    public GameObject singleRock;
+    public GameObject bugMultyPillar;
+    public GameObject deadSingleTree;
+    public GameObject greenSmallLeaf;
+    //Don't even talk about this one...
+    private Vector3Int offset = new Vector3Int(-128,-128,0);
+     
     private void Awake()
     {
         instance = this;
      
+    }
+
+    private void Start()
+    {
+       
     }
 
     private void Update()
@@ -25,35 +37,75 @@ public class EnemySpawnHandler : MonoBehaviour
         //Debug.Log(Vector3.Distance(mousePosition, center));
     }
 
-    public void SpawnEnemies(int[,] map, int height, int width)
+    public void SpawnObjects(int[,] map)
     {
-        int count = 0;
-        Vector3Int coordinate = new Vector3Int(0, 0, 0);
+        TileMapSpawner(groundTileMap, fourOpenPillar,2500, 0.016f, 0, 250);
+        TileMapSpawner(groundTileMap, doubleRock,10000, 0.04f, 0, 250);
+        TileMapSpawner(groundTileMap, singleRock,10000, 0.03f, 0, 250);
+        TileMapSpawner(groundTileMap, greenSmallLeaf,10000, 0.03f, 0, 250);
+        TileMapSpawner(groundTileMap, bugMultyPillar,1000, 0.01f, 0, 250);
+        TileMapSpawner(groundTileMap, deadSingleTree,2500, 0.01f, 0, 250);
+    }
 
-        Vector3 center = groundTileMap.transform.position;
+    public void SpawnEnemies(int[,] map)
+    {
+        TileMapSpawner(groundTileMap, blueSlime,200, 0.1f, 75, 175);
+    }
 
-        Player.instance.transform.position = center;
+    //private void TileMapSpawner(Tilemap tilemap, int[,] map, Object objectToSpawn, int chance,int min, int max)
+    //{     -------------THE OLD SPAWNER---------
+    //    
+    //      BoundsInt bounds = tilemap.cellBounds;
+    //
+    //    TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+    //    int spawnCounter = 0;
+    //    Vector3Int coordinate = new Vector3Int(0, 0, 0);
 
-        //TODO delete unused params
-        for (int x = 0; x < groundTileMap.size.x && spawnCap > count; x++)
+    //    for (int x = 0; x < bounds.size.x; x++)
+    //    {
+    //        for (int y = 0; y < bounds.size.y; y++)
+    //        {
+    //            TileBase tile = allTiles[x + y * bounds.size.x];
+    //            if (tile != null && map[x, y] == 1 && x > min && x < max && y > min && y < max)
+    //            {
+    //                coordinate.x = x;
+    //                coordinate.y = y;
+    //                Debug.Log(tilemap.CellToWorld(coordinate));
+    //                if (Random.Range(1, 1001) < chance && spawnCounter <= spawnCap)
+    //                {
+    //                    spawnCounter++;
+    //                    var instance = Instantiate(objectToSpawn, tilemap.CellToWorld(new Vector3Int(x, y, 0) + offset), Quaternion.identity);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+    public void TileMapSpawner(Tilemap tilemap,Object objectToSpawn, int spawnCap, float chance, int min, int max)
+    {
+        int spawnCounter = 0;
+        //Here i'm gonna assume we have a square matrix(force it in MapGenerator)
+        var cellMin = groundTileMap.origin.x + min;
+        var cellMax = groundTileMap.origin.x + max;
+        //TODO exclude neighbours with regular Tile
+        for (int y = groundTileMap.origin.y; y < groundTileMap.size.y; y++)
         {
-            for (int y = 0; y < groundTileMap.size.y && spawnCap > count; y++)
+            for (int x = groundTileMap.origin.x; x < groundTileMap.size.x; x++)
             {
-                coordinate.x = x;
-                coordinate.y = y;
-                var coordCellToWorld = groundTileMap.CellToWorld(coordinate);
-                Debug.Log(coordCellToWorld);
-                var lookatme = Vector3.Distance(coordCellToWorld, center);
+                var cellCoord = new Vector3Int(x, y, 0);
+                TileBase tile = groundTileMap.GetTile<RuleTile>(cellCoord);
 
-                if (groundTileMap.HasTile(coordinate) && Vector3.Distance(coordCellToWorld, center) >  2 && Vector3.Distance(coordCellToWorld, center) < 30 && map[x,y] == 1)
+                if (tile != null && x > cellMin && x < cellMax && y > cellMin && y < cellMax)
                 {
-                    if (Random.Range(0,100) > 98)
-                    {
+                    Vector3 worldCoords = groundTileMap.CellToWorld(cellCoord);
 
-                        var instance = Instantiate(blueSlime, coordCellToWorld, Quaternion.identity);
-                        count++;
+                    if (Random.value <= chance && spawnCounter <= spawnCap)
+                    {
+                        spawnCounter++;
+                        var instance = Instantiate(objectToSpawn, worldCoords, Quaternion.identity);
                     }
                 }
+
             }
         }
     }

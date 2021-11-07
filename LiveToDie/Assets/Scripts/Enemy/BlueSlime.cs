@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,8 +30,30 @@ public class BlueSlime : Enemy
     {
         Debug.Log("I just died in your arms tonight");
 
+        DropARandomItem();
         DropExperience();
         Destroy(gameObject);
+    }
+
+    private void DropARandomItem()
+    {
+        var valueForItemToDrop = UnityEngine.Random.Range(0,6);
+        Item droppedItem = new Item() { itemType = Item.ItemType.Weapon, amount = 1 };
+
+        if (valueForItemToDrop < 3)
+        {
+            droppedItem = new Item() {itemType = Item.ItemType.Weapon, amount = 1 };
+        }
+        else if(valueForItemToDrop > 2 && valueForItemToDrop < 5)
+        {
+            droppedItem = new Item() { itemType = Item.ItemType.ManaPotion, amount = 1 };
+        }
+        else if(valueForItemToDrop > 4)
+        {
+            droppedItem = new Item() { itemType = Item.ItemType.HealtPotion, amount = 1 };
+        }
+
+        ItemWorld.DropItem(gameObject.transform.position, droppedItem);
     }
 
     public void Attack()

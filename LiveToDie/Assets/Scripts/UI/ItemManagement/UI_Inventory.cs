@@ -82,15 +82,16 @@ public class UI_Inventory : MonoBehaviour
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () =>
                                                             {
                                                                 inventory.UseItem(item);
+                                                                inventory.RemoveItem(item);
 
                                                             };
 
             itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => 
                                                             {
                                                                 //To have different references
-                                                                Item droppeItem = new Item { amount = item.amount, itemType = item.itemType };
+                                                                Item droppedItem = new Item { amount = item.amount, itemType = item.itemType };
                                                                 inventory.RemoveItem(item);
-                                                                ItemWorld.DropItem(player.transform.position, droppeItem);
+                                                                ItemWorld.DropItem(player.transform.position, droppedItem);
 
                                                             };
 

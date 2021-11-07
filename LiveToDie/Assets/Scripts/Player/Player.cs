@@ -53,9 +53,13 @@ public class Player : EntityBase
 
     private void UseHealthPotion()
     {
-        if (currentHealth <= 90)
+        if (health - currentHealth >= 10)
         {
-            currentHealth += 10; 
+            currentHealth += 10;
+        }
+        else
+        {
+            currentHealth = health;
         }
     }
 
