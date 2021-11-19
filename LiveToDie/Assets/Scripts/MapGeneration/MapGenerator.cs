@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
+    private int _count = 0;
+    private int[,] _terrainMap;
 
     [Range(0, 100)]
     public int initialChance;
@@ -18,9 +20,7 @@ public class MapGenerator : MonoBehaviour
 
     [Range(1, 20)]
     public int numR;
-    private int _count = 0;
 
-    private int[,] _terrainMap;
     public Vector3Int tileMapSize;
 
     public float Progression;
@@ -94,7 +94,7 @@ public class MapGenerator : MonoBehaviour
             Progression = ((float)i+1) / numR;
         }
 
-        CleanTerrainMap(_terrainMap);
+        //CleanTerrainMap(_terrainMap);
 
         for (int x = 0; x < width; x++)
         {
@@ -118,8 +118,8 @@ public class MapGenerator : MonoBehaviour
 
     private void SpawnStuff()
     {
-        EnemySpawnHandler.instance.SpawnEnemies(_terrainMap);
-        EnemySpawnHandler.instance.SpawnObjects(_terrainMap);
+        SpawnHandler.instance.SpawnEnemies(_terrainMap);
+        SpawnHandler.instance.SpawnObjects(_terrainMap);
     }
 
     private void CleanTerrainMap(int[,] terrainMap)
