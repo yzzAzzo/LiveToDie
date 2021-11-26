@@ -92,7 +92,7 @@ public class MainMenu : MonoBehaviour
 		//	}
 
 		//Hogy oszinte legyek fogalmam sincs miert nem mukodik a fenti kód. Olyan mintha referenciat adna át az "i" vel és ezért minen 
-		//Esemeny 4 et ad parameterul tovabb pedig az bele se fut viszon az i atallitodik ra tehat ez megerositi a referencia teoriat(DE PEDIG AZ int).
+		//Esemeny 4 et ad parameterul tovabb pedig az bele se fut viszon az i atallitodik ra.
 		Buttons[0].onClick.AddListener(() => LoadGame(0));
 		Buttons[1].onClick.AddListener(() => LoadGame(1));
 		Buttons[2].onClick.AddListener(() => LoadGame(2));

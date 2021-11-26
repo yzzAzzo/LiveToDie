@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         scenesToLoad.Add(SceneManager.UnloadSceneAsync((int)Scenes.MainMenu));
         scenesToLoad.Add(SceneManager.LoadSceneAsync((int)Scenes.Game, LoadSceneMode.Additive));
         //try to delete this bro
+
+        StartCoroutine(GetSceneLoadProgress());
         StartCoroutine(GetTotalProgress());
     }
 
