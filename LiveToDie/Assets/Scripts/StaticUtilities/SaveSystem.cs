@@ -77,7 +77,7 @@ public static class SaveSystem
         if (mf)
         {
             var savePath = "Assets/SavedMaps/" + name + ".prefab";
-            if (PrefabUtility.CreatePrefab(savePath, mf))
+            if (PrefabUtility.SaveAsPrefabAsset(mf,savePath))
             {
                 EditorUtility.DisplayDialog("TilemapSaved", "Your Tilemap was saved under" + savePath, "Continue");
             }
