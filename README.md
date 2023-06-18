@@ -1,2 +1,2 @@
 # LiveToDie
-Szakdolgozat 
+Baranyai Alexander - Szakdolgozat 
